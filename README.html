@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>GoLLM &lpar;pronounced &quot;Golem&quot;&rpar;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="gollm-pronounced-golem">GoLLM (pronounced &quot;Golem&quot;)</h1>
+<p><img src="file:////Users/cameronolechowski/Documents/GitHub/gollm/assets/gollm-demo.png" alt="gollm-demo.png"></p>
+<p>A simple HTTP Server &amp; CLI-based TUI Application that interfaces with the OpenAI API in Golang.</p>
+<h2 id="set-up">Set-Up</h2>
+<p><strong>Required for Both Modalities</strong></p>
+<ul>
+<li>Open root directory of project</li>
+<li>Create <code>.env</code> file from <code>.env.template</code> file, providing OpenAI API Key</li>
+</ul>
+<h3 id="cli-based-tui-application">CLI-based TUI Application</h3>
+<ul>
+<li>Run command: <code>go run main.go cli</code></li>
+<li>This will initialize the application's TUI and allow you to begin prompting the LLM immediately with response rendered in the TUI (Memory is enabled/Memory Management needs enhancement)
+<ul>
+<li><strong>CAUTION</strong>: Context Overflow is possible with the existing <code>memory</code> implementation</li>
+</ul>
+</li>
+</ul>
+<h3 id="gin-gonic-http-server">Gin-Gonic HTTP Server</h3>
+<ul>
+<li>Run command: <code>go run main.go</code> or build binary (<code>go build</code> and/or <code>go install</code>) which will generate an executable named <code>gollm</code></li>
+<li>Using a CLI-based tool like <code>curl</code> or a HTTP server testing GUI like Postman, create a new <code>POST</code> request to <code>http://localhost:8080</code> (default port)</li>
+<li>In the body, create a JSON with a &quot;text&quot; key and assign your prompt as a value (in the form of a string)</li>
+<li>Initiate the request (Press <code>return</code> in the CLI or Press &quot;Send&quot; in Postman)</li>
+<li>View the Request's Response Payload for Assistant's Completion for the prompt sent</li>
+</ul>
+<h3 id="primary-packages-used">Primary Packages Used</h3>
+<ul>
+<li><code>gin-gonic</code>: Used to run the HTTP server and route incoming requests. The server only runs when the CLI arg is not passed.</li>
+<li><code>bubbletea</code>: The primary library used to create the TUI. Charmbracelet's TUI toolkit.</li>
+<li><code>lipgloss</code>: Charmbracelet library for stylish TUIs</li>
+<li><code>bubbles</code>: The building blocks to the <code>bubbletea</code> library. <code>bubbles</code> is to <code>bubbletea</code> what a component is to a web application.</li>
+<li><code>godotenv</code>: To access protected variables (like the OpenAI API Key) via a <code>.env</code> file</li>
+<li><code>go-openai</code>: A library containing tooling for easy set-up and configuration for OpenAI clients with OpenAI-specific interfaces/types</li>
+</ul>
+<h3 id="planned-improvements">Planned Improvements</h3>
+<ul>
+<li>&quot;Dockerizing&quot; the application</li>
+<li>Better Log Implementation/Separation</li>
+<li>Compatibility with more LLMs (Claude is next)</li>
+<li>Enhanced Memory</li>
+<li>Retrieval-Augmented Generation Tooling</li>
+<li>Enable Performant Interfacing with ORM Databases (like Postgres) and/or Key-Val stores (like Redis)</li>
+<li>LangChain-like tooling</li>
+<li>Multi-stage and/or recursive/iterative prompting</li>
+<li>Potentially a Web Application to interface with the HTTP server</li>
+<li>Make it possible to host true web server with <code>nginx</code> implementation</li>
+<li>AND MORE!</li>
+</ul>
+<h3 id="contact-me">Contact Me</h3>
+<p>Email: <a href="mailto:cam@fluenze.ai">cam@fluenze.ai</a></p>
+<p>Open to other suggestions! Please contact me if you are interested in contributing or open a PR!</p>
+
+            
+            
+        </body>
+        </html>
